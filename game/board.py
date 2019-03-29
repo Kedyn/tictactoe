@@ -19,7 +19,7 @@ class Board:
         self.is_full = False
 
         text_height = int(rect.height * .1)
-        text_rect = pygame.Rect(0, 0, rect.width / 2, text_height)
+        text_rect = pygame.Rect(rect.x, rect.y, rect.width / 2, text_height)
 
         self.player_one_text = Text(text_rect, text_height, director.regular_text_color,
                                     director.screen, player_one.name + " [" + pieceToString(player_one.piece) + "]")
@@ -40,6 +40,60 @@ class Board:
         self.player_two_score = Text(text_rect, text_height, director.regular_text_color,
                                      director.screen, str(player_two.score))
 
+        self.pieces_texts = []
+
+        x = rect.x
+        y = self.player_one_score.rect.bottom + 2
+        width = int(rect.width / 3)
+        height = int((rect.height * .8) / 3)
+
+        square = pygame.Rect(x, y, width, height)
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x = x
+        square.y += height
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x = x
+        square.y += height
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
+        square.x += width
+
+        self.pieces_texts.append(Text(square, height, director.regular_text_color,
+                                      director.screen, pieceToString(PIECE.NONE)))
+
     def render(self):
         self.player_one_text.render()
         self.player_one_score.render()
@@ -48,21 +102,27 @@ class Board:
 
         screen = self.director.screen
 
+        x = self.rect.x
         y = self.player_one_score.rect.bottom + 2
         width = int(self.rect.width / 3)
         height = int((self.rect.height * .8) / 3)
 
-        pygame.draw.line(screen, self.director.regular_text_color, (width, y),
-                         (width, self.rect.height - 4))
+        pygame.draw.line(screen, self.director.regular_text_color, (x + width, y),
+                         (x + width, self.rect.height - 4))
 
-        pygame.draw.line(screen, self.director.regular_text_color, (width * 2, y),
-                         (width * 2, self.rect.height - 4))
+        pygame.draw.line(screen, self.director.regular_text_color, (x + width * 2, y),
+                         (x + width * 2, self.rect.height - 4))
 
-        pygame.draw.line(screen, self.director.regular_text_color, (2, y + height),
-                         (self.rect.width - 2, y + height))
+        pygame.draw.line(screen, self.director.regular_text_color, (x + 2, y + height),
+                         (x + self.rect.width - 2, y + height))
 
-        pygame.draw.line(screen, self.director.regular_text_color, (2, y + (height * 2)),
-                         (self.rect.width - 2, y + (height * 2)))
+        pygame.draw.line(screen, self.director.regular_text_color, (x + 2, y + (height * 2)),
+                         (x + self.rect.width - 2, y + (height * 2)))
+
+        for indx, piece in enumerate(self.pieces_texts):
+            piece.text = pieceToString(self.pieces[indx])
+            piece.prep_img()
+            piece.render()
 
     def reset(self):
         self.pieces.fill(PIECE.NONE)
