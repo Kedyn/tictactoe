@@ -13,7 +13,7 @@ class MenuScene(Scene):
         menu_rect.center = director.screen.get_rect().center
 
         self.play = Text(
-            menu_rect, 30, director.regular_text_color, director.screen, "PLAY")
+            menu_rect, 30, director.regular_text_color, director.screen, "WAITING FOR OPONENTS TYPE !play TO PLAY")
 
     def mousebuttondown(self, button, position):
         if self.play.rect.collidepoint(position):

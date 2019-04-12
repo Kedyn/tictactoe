@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from twitch.main import *
+
 
 class Director:
     def __init__(self, resolution, title):
@@ -23,16 +25,15 @@ class Director:
 
     def loop(self):
         if self.scene is not None:
+
+            twitch = connectToTwitch()
+
             while not self.quit:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.quit = True
-                    elif event.type == pygame.KEYDOWN:
-                        self.scene.keydown(event.key)
-                    elif event.type == pygame.KEYUP:
-                        self.scene.keyup(event.key)
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        self.scene.mousebuttondown(event.button, event.pos)
+
+                getTwitchInput(twitch)
 
                 if self.fps <= pygame.time.get_ticks() - \
                         self.previous_time:
