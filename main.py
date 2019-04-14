@@ -3,6 +3,8 @@ import threading
 from game.main import Game
 from twitch.main import *
 
+input = []
+
 
 def startGame():
     game = Game()

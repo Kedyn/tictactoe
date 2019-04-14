@@ -1,6 +1,7 @@
 from .settings import *
 import socket
 import re
+import pyautogui
 
 
 def connectToTwitch():
@@ -25,11 +26,21 @@ def connectToTwitch():
             elif line == ":{}.tmi.twitch.tv 366 {} #{} :End of /NAMES list".format(NICK, NICK, NICK):
                 print("Joined bot channel... ready to take commands...")
             else:
-                tokens = line.split(" ")
-                if tokens[0] == ":{0}!{0}@{0}.tmi.twitch.tv".format(OWNER):
-                    if tokens[1] == "PRIVMSG":
-                        if tokens[3] == ":!quit":
+                if line == "":
+                    continue
+                else:
+                    tokens = line.split(":", 2)
+                    user = tokens[1].split("!", 1)[0]
+
+                    try:
+                        msg = tokens[2]
+                    except:
+                        msg = ""
+
+                    if user in OWNER:
+                        if msg == "!quit":
                             connected = False
+                            pyautogui.keyDown('esc')
                 print(line)
                 pass
 

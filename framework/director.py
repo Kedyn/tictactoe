@@ -28,6 +28,14 @@ class Director:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.quit = True
+                    elif event.type == pygame.KEYDOWN:
+                        self.scene.keydown(event.key)
+                        if event.key == pygame.K_ESCAPE:
+                            self.quit = True
+                    elif event.type == pygame.KEYUP:
+                        self.scene.keyup(event.key)
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        self.scene.mousebuttondown(event.button, event.pos)
 
                 if self.fps <= pygame.time.get_ticks() - \
                         self.previous_time:
