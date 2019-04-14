@@ -1,0 +1,5 @@
+HOST = ""
+PORT = ""
+NICK = ""
+PASS = ""
+CHAN = ""
