@@ -40,7 +40,7 @@ def connectToTwitch():
                     if user in OWNER:
                         if msg == "!quit":
                             connected = False
-                            pyautogui.keyDown('esc')
+                            pyautogui.keyDown('q')
                 print(line)
                 pass
 

@@ -30,7 +30,7 @@ class Director:
                         self.quit = True
                     elif event.type == pygame.KEYDOWN:
                         self.scene.keydown(event.key)
-                        if event.key == pygame.K_ESCAPE:
+                        if event.key == pygame.K_q:
                             self.quit = True
                     elif event.type == pygame.KEYUP:
                         self.scene.keyup(event.key)
