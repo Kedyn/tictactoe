@@ -27,7 +27,7 @@ class Director:
             while not self.quit:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        self.quit = False
+                        self.quit = True
 
                 if self.fps <= pygame.time.get_ticks() - \
                         self.previous_time:

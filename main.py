@@ -5,10 +5,10 @@ from twitch.main import *
 
 playing = True
 
-game = Game()
-
 
 def startGame():
+    game = Game()
+
     game.play()
 
     playing = False
