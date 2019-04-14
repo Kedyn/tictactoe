@@ -3,13 +3,13 @@ import socket
 import re
 
 
-def connectToTwitch(game):
+def connectToTwitch(playing):
     twitch = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     twitch.connect((HOST, PORT))
     twitch.send("PASS {}\r\n".format(PASS).encode("utf-8"))
     twitch.send("NICK {}\r\n".format(NICK).encode("utf-8"))
 
-    while not game.director.quit:
+    while playing:
         chat = twitch.recv(4096).decode("utf-8")
 
         for line in chat.split("\n"):

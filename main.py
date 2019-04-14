@@ -11,9 +11,11 @@ game = Game()
 def startGame():
     game.play()
 
+    playing = False
+
 
 def connectToChat():
-    connectToTwitch(game)
+    connectToTwitch(playing)
 
 
 if __name__ == "__main__":
