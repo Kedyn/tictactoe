@@ -3,13 +3,15 @@ import socket
 import re
 
 
-def connectToTwitch(playing):
+def connectToTwitch():
     twitch = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     twitch.connect((HOST, PORT))
     twitch.send("PASS {}\r\n".format(PASS).encode("utf-8"))
     twitch.send("NICK {}\r\n".format(NICK).encode("utf-8"))
 
-    while playing:
+    connected = True
+
+    while connected:
         chat = twitch.recv(4096).decode("utf-8")
 
         for line in chat.split("\n"):
@@ -23,4 +25,12 @@ def connectToTwitch(playing):
             elif line == ":{}.tmi.twitch.tv 366 {} #{} :End of /NAMES list".format(NICK, NICK, NICK):
                 print("Joined bot channel... ready to take commands...")
             else:
+                tokens = line.split(" ")
+                if tokens[0] == ":{0}!{0}@{0}.tmi.twitch.tv".format(OWNER):
+                    if tokens[1] == "PRIVMSG":
+                        if tokens[3] == ":!quit":
+                            connected = False
+                print(line)
                 pass
+
+    twitch.close()

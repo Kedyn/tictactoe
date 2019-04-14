@@ -1,5 +1,6 @@
 HOST = "irc.twitch.tv"
 PORT = 6667
-NICK = ""
-PASS = ""
-CHAN = ""
+NICK = "sinstrbot"
+PASS = "oauth:ule7sadmbpbmu5vafd44sllrqps9ge"
+CHAN = "sinstrbot"
+OWNER = "CHANGE_THIS_TO_UR_USERNAME"

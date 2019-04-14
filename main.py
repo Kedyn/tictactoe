@@ -3,19 +3,15 @@ import threading
 from game.main import Game
 from twitch.main import *
 
-playing = True
-
 
 def startGame():
     game = Game()
 
     game.play()
 
-    playing = False
-
 
 def connectToChat():
-    connectToTwitch(playing)
+    connectToTwitch()
 
 
 if __name__ == "__main__":
