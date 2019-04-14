@@ -15,20 +15,6 @@ class MenuScene(Scene):
         self.play = Text(
             menu_rect, 30, director.regular_text_color, director.screen, "WAITING FOR OPONENTS TYPE !play TO PLAY")
 
-    def mousebuttondown(self, button, position):
-        if self.play.rect.collidepoint(position):
-            self.director.set_scene("game")
-
-    def update(self):
-        position = pygame.mouse.get_pos()
-
-        if self.play.rect.collidepoint(position):
-            self.play.color = self.director.special_text_color
-        else:
-            self.play.color = self.director.regular_text_color
-
-        self.play.prep_img()
-
     def render(self):
         super().render()
 

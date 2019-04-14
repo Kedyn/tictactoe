@@ -2,23 +2,16 @@ from .settings import *
 import socket
 import re
 
-def connectToTwitch():
+
+def connectToTwitch(game):
     twitch = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     twitch.connect((HOST, PORT))
     twitch.send("PASS {}\r\n".format(PASS).encode("utf-8"))
     twitch.send("NICK {}\r\n".format(NICK).encode("utf-8"))
 
-    return twitch
-
-
-def getTwitchInput(twitch):
-    try:
+    while not game.director.quit:
         chat = twitch.recv(4096).decode("utf-8")
-    except socket.error:
-        print("Twitch connection error")
-    except:
-        print("Twitch unknown error")
-    else:
+
         for line in chat.split("\n"):
             line = line.strip("\r\n")
 
