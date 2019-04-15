@@ -11,7 +11,7 @@ class GameScene(Scene):
     def __init__(self, director, background=(0, 0, 0)):
         super().__init__(director, background)
 
-        player_one = Player("HUMAN", PIECE.X)
+        player_one = Player("TWITCH CHAT", PIECE.X)
         player_two = Player("AI", PIECE.O)
 
         self.board = Board(director, director.screen.get_rect(),

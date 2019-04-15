@@ -41,7 +41,38 @@ def connectToTwitch():
                         if msg == "!quit":
                             connected = False
                             pyautogui.keyDown('q')
-                print(line)
-                pass
+                            pyautogui.keyUp('q')
+
+                    if msg == "!play":
+                        pyautogui.keyDown('p')
+                        pyautogui.keyUp('p')
+                    elif msg == "1":
+                        pyautogui.keyDown('1')
+                        pyautogui.keyUp('1')
+                    elif msg == "2":
+                        pyautogui.keyDown('2')
+                        pyautogui.keyUp('2')
+                    elif msg == "3":
+                        pyautogui.keyDown('3')
+                        pyautogui.keyUp('3')
+                    elif msg == "4":
+                        pyautogui.keyDown('4')
+                        pyautogui.keyUp('4')
+                    elif msg == "5":
+                        pyautogui.keyDown('5')
+                        pyautogui.keyUp('5')
+                    elif msg == "6":
+                        pyautogui.keyDown('6')
+                        pyautogui.keyUp('6')
+                    elif msg == "7":
+                        pyautogui.keyDown('7')
+                        pyautogui.keyUp('7')
+                    elif msg == "8":
+                        pyautogui.keyDown('8')
+                        pyautogui.keyUp('8')
+                    elif msg == "9":
+                        pyautogui.keyDown('9')
+                        pyautogui.keyUp('9')
+                    pass
 
     twitch.close()

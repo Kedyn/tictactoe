@@ -15,6 +15,10 @@ class MenuScene(Scene):
         self.play = Text(
             menu_rect, 30, director.regular_text_color, director.screen, "WAITING FOR OPONENTS TYPE !play TO PLAY")
 
+    def keydown(self, key):
+        if key == pygame.K_p:
+            self.director.set_scene("game")
+
     def render(self):
         super().render()
 
