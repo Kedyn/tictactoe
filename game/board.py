@@ -4,8 +4,8 @@ from .piece import PIECE
 from framework.text import Text
 
 
-def pieceToString(piece):
-    return "X" if piece is PIECE.X else "O" if piece is PIECE.O else " "
+def pieceToString(piece, position=" "):
+    return "X" if piece is PIECE.X else "O" if piece is PIECE.O else position
 
 
 class Board:
@@ -50,49 +50,51 @@ class Board:
         square = pygame.Rect(x, y, width, height)
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "1")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "2")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "3")))
 
         square.x = x
         square.y += height
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "4")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "5")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "6")))
 
         square.x = x
         square.y += height
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "7")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "8")))
 
         square.x += width
 
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
-                                      director.screen, pieceToString(PIECE.NONE)))
+                                      director.screen, pieceToString(PIECE.NONE, "9")))
+
+        print(self.pieces_texts[0].text)
 
     def render(self):
         self.player_one_text.render()
@@ -120,8 +122,8 @@ class Board:
                          (x + self.rect.width - 2, y + (height * 2)))
 
         for indx, piece in enumerate(self.pieces_texts):
-            piece.text = pieceToString(self.pieces[indx])
-            piece.prep_img()
+            # piece.text = pieceToString(self.pieces[indx])
+            # piece.prep_img()
             piece.render()
 
     def reset(self):
