@@ -94,8 +94,6 @@ class Board:
         self.pieces_texts.append(Text(square, height, director.regular_text_color,
                                       director.screen, pieceToString(PIECE.NONE, "9")))
 
-        print(self.pieces_texts[0].text)
-
     def render(self):
         self.player_one_text.render()
         self.player_one_score.render()
@@ -122,8 +120,8 @@ class Board:
                          (x + self.rect.width - 2, y + (height * 2)))
 
         for indx, piece in enumerate(self.pieces_texts):
-            # piece.text = pieceToString(self.pieces[indx])
-            # piece.prep_img()
+            piece.text = pieceToString(self.pieces[indx], str(indx + 1))
+            piece.prep_img()
             piece.render()
 
     def reset(self):
