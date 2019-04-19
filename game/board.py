@@ -129,11 +129,6 @@ class Board:
         self.winner = PIECE.NONE
         self.is_full = False
 
-    def copy(self, from_board):
-        self.winner = from_board.winner
-        self.is_full = from_board.is_full
-        self.pieces = from_board.copy()
-
     def check(self):
         if self.pieces[0] == self.pieces[1] and self.pieces[1] == self.pieces[2]:
             self.winner = self.pieces[0]
@@ -151,16 +146,3 @@ class Board:
             self.winner = self.pieces[3]
         elif self.pieces[6] == self.pieces[7] and self.pieces[7] == self.pieces[8]:
             self.winner = self.pieces[6]
-
-    def isFull(self):
-        return all(object[tile] == PIECE.NONE for tile in self.pieces)
-
-    def getEmptyIndexies(self):
-        return [item for item, piece in self.pieces if piece == PIECE.NONE]
-
-    def getBoardScoreForPiece(self, piece):
-        if piece == self.winner:
-            return 7
-        elif PIECE.NONE == self.winner:
-            return 0
-        return -7
