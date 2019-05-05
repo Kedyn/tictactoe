@@ -1,4 +1,6 @@
 from .piece import PIECE
+import random
+import time
 
 
 class AI:
@@ -10,81 +12,89 @@ class AI:
         else:
             self.opponents_piece = PIECE.X
 
-    def move(self, board):
-        best = self.minimax(board, True)
+    def getBoardCopy(self, board):
+        # Make a copy of the board list and return it.
+        boardCopy = []
+        for i in board:
+            boardCopy.append(i)
+        return boardCopy
 
-        if best[1] != -1:
-            board[best[1]] = self.piece
+    def move(self, board):  # makes the ai move to where it wants based  on the minimax algorithm
+        move = self.getComputerMove(board, self.piece)
 
-        return board
+        # make a variable that will be known for this class
+        #self.boardClone = self.getBoardCopy(board)
 
-    def minimax(self, board, maximize):
-        empty_indices = self.getEmptyIndexies(board)
+        board[move] = self.piece
 
-        if len(empty_indices) == 0:
-            return [self.getBoardScoreForPiece(board), -1]
+        return board  # This function call is the one that knows what our board looks like, this MUST RETURN a list that will make that move in the board
 
-        if maximize:
-            best = [-9, -1]
+    def isSpaceFree(self, board, move):
+        # Return True if the passed move is free on the passed board.
+        return board[move] == 0
 
-            for cell in empty_indices:
-                board[cell] = self.piece
+    def makeMove(self, board, letter, move):
+        board[move] = letter
 
-                value = self.minimax(board, False)
+    def getComputerMove(self, board, computerLetter):
 
-                if value[0] > best[0]:
-                    best = value
+        # Here is the algorithm for our Tic-Tac-Toe AI:
+        # First, check if we can win in the next move.
+        for i in range(0, 9):
+            boardCopy = self.getBoardCopy(board)
+            if self.isSpaceFree(boardCopy, i):
+                self.makeMove(boardCopy, computerLetter, i)
+                if self.isWinner(boardCopy, computerLetter):
+                    return i
 
-                    best[1] = cell
+        # Check if the player could win on their next move and block them.
+        for i in range(0, 9):
+            boardCopy = self.getBoardCopy(board)
+            if self.isSpaceFree(boardCopy, i):
+                self.makeMove(boardCopy,  self.opponents_piece, i)
+                if self.isWinner(boardCopy, self.opponents_piece):
+                    return i
 
-                board[cell] = PIECE.NONE
+        # Try to take the center, if it is free.
+        if self.isSpaceFree(board, 4):
+            return 4
 
-            return best
+        # Try to take one of the corners, if they are free.
+        move = self.chooseRandomMoveFromList(board, [0, 2, 6, 8])
+        if move != None:
+            return move
+
+        # Move on one of the sides.
+        return self.chooseRandomMoveFromList(board, [1, 3, 5, 7])
+
+    def chooseRandomMoveFromList(self, board, moveList):
+        # Returns a valid move from the passed list on the passed board.
+        # Returns None if there is no valid move.
+        possibleMoves = []
+
+        for i in moveList:
+            if self.isSpaceFree(board, i):
+                possibleMoves.append(i)
+
+        if len(possibleMoves) != 0:
+            return random.choice(possibleMoves)
         else:
-            worst = [9, -1]
+            return None
 
-            for cell in empty_indices:
-                board[cell] = self.opponents_piece
+    def isWinner(self, bo, le):
+        # Given a board and a player's letter, this function returns True if that player has won.
+        # We use "bo" instead of "board" and "le" instead of "letter" so we don't have to type as much.
 
-                value = self.minimax(board, True)
-
-                if value[0] < worst[0]:
-                    worst = value
-
-                    worst[1] = cell
-
-                board[cell] = PIECE.NONE
-
-            return worst
-
-    def getEmptyIndexies(self, board):
-        return [item for item, piece in enumerate(board) if piece == PIECE.NONE]
-
-    def getBoardScoreForPiece(self, board):
-        winner = self.getWinner(board)
-
-        if self.piece == winner:
-            return 7
-        elif self.opponents_piece == winner:
-            return -7
-        return 0
-
-    def getWinner(self, board):
-        if board[0] == board[1] and board[1] == board[2] and board[0] != PIECE.NONE:
-            return board[0]
-        elif board[0] == board[3] and board[3] == board[6] and board[0] != PIECE.NONE:
-            return board[0]
-        elif board[0] == board[4] and board[4] == board[8] and board[0] != PIECE.NONE:
-            return board[0]
-        elif board[1] == board[4] and board[4] == board[7] and board[0] != PIECE.NONE:
-            return board[1]
-        elif board[2] == board[4] and board[4] == board[6] and board[0] != PIECE.NONE:
-            return board[2]
-        elif board[2] == board[5] and board[5] == board[8] and board[0] != PIECE.NONE:
-            return board[2]
-        elif board[3] == board[4] and board[4] == board[5] and board[0] != PIECE.NONE:
-            return board[3]
-        elif board[6] == board[7] and board[7] == board[8] and board[0] != PIECE.NONE:
-            return board[6]
-
-        return PIECE.NONE
+        return ((bo[0] == le and bo[1] == le and bo[2] == le) or  # Across the top
+                # Across the middle
+                (bo[3] == le and bo[4] == le and bo[5] == le) or
+                # Across the bottom
+                (bo[6] == le and bo[7] == le and bo[8] == le) or
+                # Down left side
+                (bo[0] == le and bo[3] == le and bo[4] == le) or
+                # Down middle side
+                (bo[1] == le and bo[4] == le and bo[7] == le) or
+                # Down right side
+                (bo[2] == le and bo[5] == le and bo[8] == le) or
+                (bo[0] == le and bo[4] == le and bo[8] == le) or  # Diagonal
+                (bo[2] == le and bo[4] == le and bo[6] == le))    # Diagonal

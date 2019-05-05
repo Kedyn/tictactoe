@@ -30,6 +30,7 @@ class GameScene(Scene):
 
     def update(self):
         if self.waiting_for_ai:
+            # this returns a list of what the current board is currently
             self.board.pieces = self.ai.move(self.board.pieces)
             self.waiting_for_ai = False
         elif self.key_pressed:
