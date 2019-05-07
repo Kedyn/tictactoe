@@ -26,7 +26,7 @@ class Board:
 
         text_rect.top = text_rect.bottom
 
-        self.player_one_score = Text(text_rect, text_height, director.regular_text_color,
+        self.player_one_score = Text(text_rect, text_height, (director.regular_text_color),
                                      director.screen, str(player_one.score))
 
         text_rect.top = 0
@@ -95,9 +95,15 @@ class Board:
                                       director.screen, pieceToString(PIECE.NONE, "9")))
 
     def render(self):
+
         self.player_one_text.render()
+
+        self.player_one_score.prep_img()
         self.player_one_score.render()
+
         self.player_two_text.render()
+
+        self.player_two_score.prep_img()
         self.player_two_score.render()
 
         screen = self.director.screen
