@@ -12,7 +12,7 @@ from .ai import AI
 class GameScene(Scene):
     def __init__(self, director, background=(0, 0, 0)):
         super().__init__(director, background)
-
+        pygame.mixer.init()
         player_one = Player("TWITCH CHAT", PIECE.X)
         player_two = Player("AI", PIECE.O)
 
@@ -27,6 +27,7 @@ class GameScene(Scene):
 
         self.flagState = 0
         self.isGameDone = False
+
         # Display tie Text
         tie_rect = pygame.Rect(600, 250, 100, 110)
         # tie_rect.center = director.screen.get_rect().center
@@ -44,6 +45,11 @@ class GameScene(Scene):
         self.loserText = Text(
             loser_rect, 110, (127, 0, 255), director.screen, "YOU LOST! IM INEVITABLE!")
 
+        # Audio files
+        self.losing_sound = pygame.mixer.Sound("assets/sounds/DreadedLost.wav")
+        self.winning_sound = pygame.mixer.Sound(
+            "assets/sounds/DropOfBloodWon.wav")
+
     def reset(self):
         self.board.reset()
 
@@ -59,6 +65,7 @@ class GameScene(Scene):
         score = self.ai.getBoardScoreForPiece(self.board.pieces)
 
         if score == 7:
+            self.losing_sound.play()
             self.flagState = 1
             self.isGameDone = True
             self.board.player_two.score += 1
@@ -70,6 +77,7 @@ class GameScene(Scene):
 
             return True
         elif score == -7:
+            self.winning_sound.play()
             self.flagState = 2
             self.isGameDone = True
             self.board.player_one.score += 1
@@ -124,6 +132,7 @@ class GameScene(Scene):
                     self.board.pieces[8] = self.board.player_one.piece
                     self.waiting_for_ai = True
         else:
+            self.isGameDone = True
             self.reset()
 
     def render(self):
