@@ -125,7 +125,7 @@ class Board:
             piece.render()
 
     def reset(self):
-        self.pieces.fill(PIECE.NONE)
+        self.pieces = [PIECE.NONE for i in range(9)]
         self.winner = PIECE.NONE
         self.is_full = False
 
