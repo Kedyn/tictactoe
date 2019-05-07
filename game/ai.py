@@ -11,17 +11,18 @@ class AI:
             self.opponents_piece = PIECE.X
 
     def move(self, board):
-        best = self.minimax(board, True)
+        print(board)
+        best = self.minimax(board, len(self.getEmptyIndexies(board)), True)
 
         if best[1] != -1:
             board[best[1]] = self.piece
-
+        print(board)
         return board
 
-    def minimax(self, board, maximize):
+    def minimax(self, board, depth, maximize):
         empty_indices = self.getEmptyIndexies(board)
 
-        if len(empty_indices) == 0:
+        if len(empty_indices) == 0 or self.getBoardScoreForPiece(board) != 0 or depth == 0:
             return [self.getBoardScoreForPiece(board), -1]
 
         if maximize:
@@ -30,10 +31,10 @@ class AI:
             for cell in empty_indices:
                 board[cell] = self.piece
 
-                value = self.minimax(board, False)
+                value = self.minimax(board, depth - 1, False)
 
                 if value[0] > best[0]:
-                    best = value
+                    best[0] = value[0]
 
                     best[1] = cell
 
@@ -46,10 +47,10 @@ class AI:
             for cell in empty_indices:
                 board[cell] = self.opponents_piece
 
-                value = self.minimax(board, True)
+                value = self.minimax(board, depth - 1, True)
 
                 if value[0] < worst[0]:
-                    worst = value
+                    worst[0] = value[0]
 
                     worst[1] = cell
 
