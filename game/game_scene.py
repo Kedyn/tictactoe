@@ -12,7 +12,7 @@ from .ai import AI
 class GameScene(Scene):
     def __init__(self, director, background=(0, 0, 0)):
         super().__init__(director, background)
-        pygame.mixer.init()
+
         player_one = Player("TWITCH CHAT", PIECE.X)
         player_two = Player("AI", PIECE.O)
 
@@ -46,9 +46,8 @@ class GameScene(Scene):
             loser_rect, 110, (127, 0, 255), director.screen, "YOU LOST! IM INEVITABLE!")
 
         # Audio files
-        self.losing_sound = pygame.mixer.Sound("assets/sounds/DreadedLost.wav")
-        self.winning_sound = pygame.mixer.Sound(
-            "assets/sounds/DropOfBloodWon.wav")
+        self.losing_sound = pygame.mixer.Sound("game/DreadedLost.ogg")
+        self.winning_sound = pygame.mixer.Sound("game/DropOfBloodWon.ogg")
 
     def reset(self):
         self.board.reset()
@@ -132,21 +131,20 @@ class GameScene(Scene):
                     self.board.pieces[8] = self.board.player_one.piece
                     self.waiting_for_ai = True
         else:
-            self.isGameDone = True
             self.reset()
 
     def render(self):
         super().render()
 
-        if self.isGameDone:
-            if self.flagState == 1:
-                self.loserText.render()
-                #self.isGameDone = False
-            elif self.flagState == 2:
-                self.winnerText.render()
-                #self.isGameDone = False
-            else:
-                self.tieText.render()
-                #self.isGameDone = False
+        # if self.isGameDone:
+        #     if self.flagState == 1:
+        #         self.loserText.render()
+        #         #self.isGameDone = False
+        #     elif self.flagState == 2:
+        #         self.winnerText.render()
+        #         #self.isGameDone = False
+        #     else:
+        #         self.tieText.render()
+        #         #self.isGameDone = False
 
         self.board.render()
