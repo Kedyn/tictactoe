@@ -11,12 +11,11 @@ class AI:
             self.opponents_piece = PIECE.X
 
     def move(self, board):
-        print(board)
         best = self.minimax(board, len(self.getEmptyIndexies(board)), True)
 
         if best[1] != -1:
             board[best[1]] = self.piece
-        print(board)
+
         return board
 
     def minimax(self, board, depth, maximize):

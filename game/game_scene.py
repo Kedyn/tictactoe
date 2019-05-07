@@ -24,6 +24,13 @@ class GameScene(Scene):
 
         self.ai = AI(player_two.piece)
 
+    def reset(self):
+        self.board.reset()
+
+        self.key_pressed = 0
+
+        self.waiting_for_ai = False
+
     def keydown(self, key):
         if not self.waiting_for_ai:
             self.key_pressed = key
