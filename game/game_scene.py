@@ -88,6 +88,7 @@ class GameScene(Scene):
 
             return True
         elif score == 0 and not self.ai.getEmptyIndexies(self.board.pieces):
+            self.winning_sound.play()
             self.flagState = 0
             self.isGameDone = True
             time.sleep(3)
