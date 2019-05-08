@@ -58,6 +58,10 @@ class GameScene(Scene):
     def reset(self):
         self.board.reset()
 
+        self.tieText.text = "THE GAME IS A TIE!"
+        self.winnerText.text = "WE FOUND A WINNER!"
+        self.loserText.text = "YOU LOST! I'M INEVITABLE!"
+
         self.key_pressed = 0
 
         self.randValue = random.randint(1, 999)
@@ -66,14 +70,11 @@ class GameScene(Scene):
             self.waiting_for_ai = False
             self.board.player_one_text.color = self.YELLOW
             self.board.player_two_text.color = self.WHITE
-            # self.board.aiTextColor = self.YELLOW
-            # self.board.playerTextColor = self.WHITE
+
         else:
             self.waiting_for_ai = True
             self.board.player_one_text.color = self.WHITE
             self.board.player_two_text.color = self.YELLOW
-            # self.board.playerTextColor = self.YELLOW
-            # self.board.aiTextColor = self.WHITE
 
     def keydown(self, key):
         if not self.waiting_for_ai:
@@ -158,12 +159,27 @@ class GameScene(Scene):
 
         if self.isGameDone:
             if self.flagState == 1:
+                self.loserText.prep_img()
+                self.loserText.render()
+                time.sleep(2)
+                self.loserText.text = " "
+                self.loserText.prep_img()
                 self.loserText.render()
                 #self.isGameDone = False
             elif self.flagState == 2:
+                self.winnerText.prep_img()
+                self.winnerText.render()
+                time.sleep(2)
+                self.winnerText.text = " "
+                self.winnerText.prep_img()
                 self.winnerText.render()
                 #self.isGameDone = False
             else:
+                self.tieText.prep_img()
+                self.tieText.render()
+                time.sleep(2)
+                self.tieText.text = " "
+                self.tieText.prep_img()
                 self.tieText.render()
                 #self.isGameDone = False
 
