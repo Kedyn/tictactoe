@@ -31,6 +31,9 @@ class GameScene(Scene):
         self.flagState = 0
         self.isGameDone = False
 
+        self.YELLOW = (255, 255, 0)
+        self.WHITE = (255, 255, 255)
+
         # Display tie Text
         tie_rect = pygame.Rect(640, 100, 1, 1)
         # tie_rect.center = director.screen.get_rect().center
@@ -61,12 +64,16 @@ class GameScene(Scene):
 
         if self.randValue % 2 == 1:
             self.waiting_for_ai = False
-            self.board.aiTextColor = (255, 255, 0)
-            self.board.playerTextColor = (255,255,255)
+            self.board.player_one_text.color = self.YELLOW
+            self.board.player_two_text.color = self.WHITE
+            # self.board.aiTextColor = self.YELLOW
+            # self.board.playerTextColor = self.WHITE
         else:
             self.waiting_for_ai = True
-            self.board.playerTextColor = (255, 255, 0)
-            self.board.aiTextColor = (255,255,255)
+            self.board.player_one_text.color = self.WHITE
+            self.board.player_two_text.color = self.YELLOW
+            # self.board.playerTextColor = self.YELLOW
+            # self.board.aiTextColor = self.WHITE
 
     def keydown(self, key):
         if not self.waiting_for_ai:

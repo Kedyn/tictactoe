@@ -18,7 +18,7 @@ class Board:
         self.winner = PIECE.NONE
         self.is_full = False
         self.playerTextColor = (255, 255, 0)
-        self.aiTextColor = (255,255,0)
+        self.aiTextColor = (255, 255, 0)
 
         text_height = int(rect.height * .1)
         text_rect = pygame.Rect(rect.x, rect.y, rect.width / 2, text_height)
@@ -28,13 +28,13 @@ class Board:
 
         text_rect.top = text_rect.bottom
 
-        self.player_one_score = Text(text_rect, text_height, self.aiTextColor,
+        self.player_one_score = Text(text_rect, text_height, director.regular_text_color,
                                      director.screen, str(player_one.score))
 
         text_rect.top = 0
         text_rect.left = text_rect.right
 
-        self.player_two_text = Text(text_rect, text_height, self.newTextColor,
+        self.player_two_text = Text(text_rect, text_height, self.aiTextColor,
                                     director.screen, player_two.name + " [" + pieceToString(player_two.piece) + "]")
 
         text_rect.top = text_rect.bottom
@@ -98,11 +98,13 @@ class Board:
 
     def render(self):
 
+        self.player_one_text.prep_img()
         self.player_one_text.render()
 
         self.player_one_score.prep_img()
         self.player_one_score.render()
 
+        self.player_two_text.prep_img()
         self.player_two_text.render()
 
         self.player_two_score.prep_img()
