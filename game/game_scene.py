@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 from framework.scene import Scene
 from framework.text import Text
@@ -20,6 +21,8 @@ class GameScene(Scene):
                            player_one, player_two)
 
         self.key_pressed = 0
+
+        self.randValue = 0
 
         self.waiting_for_ai = False
 
@@ -54,7 +57,12 @@ class GameScene(Scene):
 
         self.key_pressed = 0
 
-        self.waiting_for_ai = False
+        self.randValue = random.randint(1, 999)
+
+        if self.randValue % 2 == 1:
+            self.waiting_for_ai = False
+        else:
+            self.waiting_for_ai = True
 
     def keydown(self, key):
         if not self.waiting_for_ai:
