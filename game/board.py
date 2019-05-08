@@ -17,22 +17,24 @@ class Board:
         self.pieces = [PIECE.NONE for i in range(9)]
         self.winner = PIECE.NONE
         self.is_full = False
+        self.playerTextColor = (255, 255, 0)
+        self.aiTextColor = (255,255,0)
 
         text_height = int(rect.height * .1)
         text_rect = pygame.Rect(rect.x, rect.y, rect.width / 2, text_height)
 
-        self.player_one_text = Text(text_rect, text_height, director.regular_text_color,
+        self.player_one_text = Text(text_rect, text_height, self.playerTextColor,
                                     director.screen, player_one.name + " [" + pieceToString(player_one.piece) + "]")
 
         text_rect.top = text_rect.bottom
 
-        self.player_one_score = Text(text_rect, text_height, (director.regular_text_color),
+        self.player_one_score = Text(text_rect, text_height, self.aiTextColor,
                                      director.screen, str(player_one.score))
 
         text_rect.top = 0
         text_rect.left = text_rect.right
 
-        self.player_two_text = Text(text_rect, text_height, director.regular_text_color,
+        self.player_two_text = Text(text_rect, text_height, self.newTextColor,
                                     director.screen, player_two.name + " [" + pieceToString(player_two.piece) + "]")
 
         text_rect.top = text_rect.bottom

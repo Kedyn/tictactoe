@@ -32,21 +32,21 @@ class GameScene(Scene):
         self.isGameDone = False
 
         # Display tie Text
-        tie_rect = pygame.Rect(600, 250, 100, 110)
+        tie_rect = pygame.Rect(640, 100, 1, 1)
         # tie_rect.center = director.screen.get_rect().center
         self.tieText = Text(
-            tie_rect, 110, (255, 255, 0), director.screen, "THE GAME IS A TIE!")
+            tie_rect, 50, (255, 255, 0), director.screen, "THE GAME IS A TIE!")
 
         # Display winner Text
-        winner_rect = pygame.Rect(600, 250, 100, 150)
+        winner_rect = pygame.Rect(640, 100, 1, 1)
         winner_rect.center = director.screen.get_rect().center
         self.winnerText = Text(
-            winner_rect, 150, (255, 255, 0), director.screen, "WE FOUND A WINNER!")
+            winner_rect, 50, (255, 255, 0), director.screen, "WE FOUND A WINNER!")
 
         # Display loser Text
-        loser_rect = pygame.Rect(600, 250, 100, 110)
+        loser_rect = pygame.Rect(640, 100, 1, 1)
         self.loserText = Text(
-            loser_rect, 110, (127, 0, 255), director.screen, "YOU LOST! IM INEVITABLE!")
+            loser_rect, 50, (127, 0, 255), director.screen, "YOU LOST! I'M INEVITABLE!")
 
         # Audio files
         self.losing_sound = pygame.mixer.Sound("game/DreadedLost.ogg")
@@ -61,8 +61,12 @@ class GameScene(Scene):
 
         if self.randValue % 2 == 1:
             self.waiting_for_ai = False
+            self.board.aiTextColor = (255, 255, 0)
+            self.board.playerTextColor = (255,255,255)
         else:
             self.waiting_for_ai = True
+            self.board.playerTextColor = (255, 255, 0)
+            self.board.aiTextColor = (255,255,255)
 
     def keydown(self, key):
         if not self.waiting_for_ai:
@@ -145,15 +149,15 @@ class GameScene(Scene):
     def render(self):
         super().render()
 
-        # if self.isGameDone:
-        #     if self.flagState == 1:
-        #         self.loserText.render()
-        #         #self.isGameDone = False
-        #     elif self.flagState == 2:
-        #         self.winnerText.render()
-        #         #self.isGameDone = False
-        #     else:
-        #         self.tieText.render()
-        #         #self.isGameDone = False
+        if self.isGameDone:
+            if self.flagState == 1:
+                self.loserText.render()
+                #self.isGameDone = False
+            elif self.flagState == 2:
+                self.winnerText.render()
+                #self.isGameDone = False
+            else:
+                self.tieText.render()
+                #self.isGameDone = False
 
         self.board.render()
