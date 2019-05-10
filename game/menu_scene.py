@@ -18,6 +18,22 @@ class MenuScene(Scene):
     def keydown(self, key):
         if key == pygame.K_p:
             self.director.set_scene("game")
+        elif key == pygame.K_e:
+            game_scene = self.director.scene_list.get("game")
+
+            game_scene.states = game_scene.easy_states
+            game_scene.waiting_for_ai = True
+            game_scene.game_type = "Self Learning"
+
+            self.director.set_scene("game")
+        elif key == pygame.K_h:
+            game_scene = self.director.scene_list.get("game")
+
+            game_scene.states = game_scene.hard_states
+            game_scene.waiting_for_ai = True
+            game_scene.game_type = "Self Learning"
+
+            self.director.set_scene("game")
 
     def render(self):
         super().render()

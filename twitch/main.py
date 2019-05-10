@@ -42,10 +42,19 @@ def connectToTwitch():
                             connected = False
                             pyautogui.keyDown('q')
                             pyautogui.keyUp('q')
+                        elif msg == "!menu":
+                            pyautogui.keyDown('m')
+                            pyautogui.keyUp('m')
 
                     if msg == "!play":
                         pyautogui.keyDown('p')
                         pyautogui.keyUp('p')
+                    elif msg == "!play easy":
+                        pyautogui.keyDown('e')
+                        pyautogui.keyUp('e')
+                    elif msg == "!play hard":
+                        pyautogui.keyDown('h')
+                        pyautogui.keyUp('h')
                     elif msg == "1":
                         pyautogui.keyDown('1')
                         pyautogui.keyUp('1')

@@ -1,6 +1,6 @@
 HOST = "irc.twitch.tv"
 PORT = 6667
-NICK = "sinstrbot"
-PASS = "oauth:ule7sadmbpbmu5vafd44sllrqps9ge"
-CHAN = "sinstrbot"
+NICK = "simpleaibot"
+PASS = "oauth:tldegtq435nf1dgdps8ik9opfw9pin"
+CHAN = "simpleaibot"
 OWNER = ["sinstr_syko", "aloeblinka"]

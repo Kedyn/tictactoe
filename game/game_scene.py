@@ -9,13 +9,15 @@ from .player import Player
 from .board import Board
 from .ai import AI
 
+from selflearning.tic_tac_toe import getHardStates, getEasyStates, makeMove
+
 
 class GameScene(Scene):
     def __init__(self, director, background=(0, 0, 0)):
         super().__init__(director, background)
 
-        player_one = Player("TWITCH CHAT", PIECE.X)
-        player_two = Player("AI", PIECE.O)
+        player_one = Player("TWITCH CHAT", PIECE.O)
+        player_two = Player("AI", PIECE.X)
 
         self.board = Board(director, director.screen.get_rect(),
                            player_one, player_two)
@@ -27,6 +29,13 @@ class GameScene(Scene):
         self.waiting_for_ai = False
 
         self.ai = AI(player_two.piece)
+
+        # self learning
+        self.hard_states = getHardStates()
+        self.easy_states = getEasyStates()
+        self.states = self.hard_states
+
+        self.game_type = "AI"
 
         self.flagState = 0
         self.isGameDone = False
@@ -64,13 +73,18 @@ class GameScene(Scene):
 
         self.key_pressed = 0
 
-        self.randValue = random.randint(1, 999)
+        if self.game_type == "AI":
+            self.randValue = random.randint(1, 999)
 
-        if self.randValue % 2 == 1:
-            self.waiting_for_ai = False
-            self.board.player_one_text.color = self.YELLOW
-            self.board.player_two_text.color = self.WHITE
+            if self.randValue % 2 == 1:
+                self.waiting_for_ai = False
+                self.board.player_one_text.color = self.YELLOW
+                self.board.player_two_text.color = self.WHITE
 
+            else:
+                self.waiting_for_ai = True
+                self.board.player_one_text.color = self.WHITE
+                self.board.player_two_text.color = self.YELLOW
         else:
             self.waiting_for_ai = True
             self.board.player_one_text.color = self.WHITE
@@ -79,6 +93,9 @@ class GameScene(Scene):
     def keydown(self, key):
         if not self.waiting_for_ai:
             self.key_pressed = key
+
+            if key == pygame.K_m:
+                self.director.set_scene("menu")
 
     def checkGameEnded(self):
         score = self.ai.getBoardScoreForPiece(self.board.pieces)
@@ -121,7 +138,17 @@ class GameScene(Scene):
     def update(self):
         if not self.checkGameEnded():
             if self.waiting_for_ai:
-                self.board.pieces = self.ai.move(self.board.pieces)
+                if self.game_type == "AI":
+                    self.board.pieces = self.ai.move(self.board.pieces)
+                else:
+                    game_state = [[self.board.pieces,[]]]
+                    results = makeMove(self.states, game_state)
+                    self.board.pieces = results[0][-1][0]
+                    # show confidence of move on results[1]
+                    # the move is i-1 so u have to add 1
+                    # is an array of moves and the confidence number
+                    # check how to make the confidence number show only 2 decimals
+                    # create an array of Text that will display if the game_type is not AI
                 self.waiting_for_ai = False
                 self.board.player_one_text.color = self.YELLOW
                 self.board.player_two_text.color = self.WHITE
