@@ -8,12 +8,31 @@ class MenuScene(Scene):
     def __init__(self, director, background=(0, 0, 0)):
         super().__init__(director, background)
 
-        menu_rect = pygame.Rect(0, 0, 100, 30)
+        play_rect = pygame.Rect(600, 350, 100, 30)
 
-        menu_rect.center = director.screen.get_rect().center
+        #menu_rect.center = director.screen.get_rect().center
+
+        line2_rect = pygame.Rect(600, 400, 100, 30)
+
+        #line2_rect.center = director.screen.get_rect().center
+
+        line3_rect = pygame.Rect(600, 450, 100, 30)
+
+        #line3_rect.center = director.screen.get_rect().center
+
+        wait_rect = pygame.Rect(600, 200, 100, 30)
+
+        self.wait = Text(
+            wait_rect, 30, director.regular_text_color, director.screen, "WAITING FOR OPONENTS TO TYPE")
 
         self.play = Text(
-            menu_rect, 30, director.regular_text_color, director.screen, "WAITING FOR OPONENTS TYPE !play TO PLAY")
+            play_rect, 30, director.regular_text_color, director.screen, "!play ---> TO PLAY AGAINST MINIMAX AI")
+
+        self.line2 = Text(
+            line2_rect, 30, director.regular_text_color, director.screen, "!play easy  ---> TO PLAY AGAINST SELF LEARNING EASY AI")
+
+        self.line3 = Text(
+            line3_rect, 30, director.regular_text_color, director.screen, "!play hard  ---> TO PLAY AGAINST SELF LEARNING HARD AI")
 
     def keydown(self, key):
         if key == pygame.K_p:
@@ -37,5 +56,7 @@ class MenuScene(Scene):
 
     def render(self):
         super().render()
-
+        self.wait.render()
         self.play.render()
+        self.line2.render()
+        self.line3.render()
