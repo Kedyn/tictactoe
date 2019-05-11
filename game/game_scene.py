@@ -26,6 +26,8 @@ class GameScene(Scene):
 
         self.randValue = 0
 
+        self.timeLeft = 3000
+
         self.waiting_for_ai = False
 
         self.ai = AI(player_two.piece)
@@ -107,7 +109,8 @@ class GameScene(Scene):
             self.board.player_two.score += 1
             self.board.player_two_score.text = str(
                 self.board.player_two.score)
-            time.sleep(3)
+
+            # pygame.time.delay(300)
             print("AI Won")
             print(self.board.player_two.score)
 
@@ -119,7 +122,7 @@ class GameScene(Scene):
             self.board.player_one.score += 1
             self.board.player_one_score.text = str(
                 self.board.player_one.score)
-            time.sleep(3)
+            # pygame.time.delay(300)
             print("Player Won")
             print(self.board.player_one.score)
 
@@ -128,7 +131,7 @@ class GameScene(Scene):
             self.winning_sound.play()
             self.flagState = 0
             self.isGameDone = True
-            time.sleep(3)
+            # pygame.time.delay(300)
             print("TIE")
 
             return True
@@ -136,12 +139,14 @@ class GameScene(Scene):
         return False
 
     def update(self):
+        ticks = pygame.time.get_ticks()
         if not self.checkGameEnded():
+            self.timeLeft = 3000
             if self.waiting_for_ai:
                 if self.game_type == "AI":
                     self.board.pieces = self.ai.move(self.board.pieces)
                 else:
-                    game_state = [[self.board.pieces,[]]]
+                    game_state = [[self.board.pieces, []]]
                     results = makeMove(self.states, game_state)
                     self.board.pieces = results[0][-1][0]
                     # show confidence of move on results[1]
@@ -199,7 +204,10 @@ class GameScene(Scene):
                     self.board.player_one_text.color = self.WHITE
                     self.board.player_two_text.color = self.YELLOW
         else:
-            self.reset()
+            while self.timeLeft >= 0:
+                self.timeLeft -= ticks
+                if self.timeLeft < 0:
+                    self.reset()
 
     def render(self):
         super().render()
