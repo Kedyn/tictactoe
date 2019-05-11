@@ -2,7 +2,7 @@
 Tic-Tac-Toe project for CPSC 481
 
 Team Members:
-Ian Michael Jesu Alvarez
-Kedyn Macedonio
-Francis Nguyen
+Ian Michael Jesu Alvarez \n
+Kedyn Macedonio \n
+Francis Nguyen \n
 Joesh Bautista
